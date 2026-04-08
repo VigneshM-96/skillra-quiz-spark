@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Compass, Stethoscope, ShieldCheck } from "lucide-react";
+import RegistrationPopup from "@/components/RegistrationPopup";
 
 const quizzes = [
   {
@@ -21,8 +23,14 @@ const quizzes = [
 
 export default function Home() {
   const navigate = useNavigate();
+  const [registered, setRegistered] = useState(
+    () => localStorage.getItem("skillra_registered") === "true"
+  );
 
   return (
+    <>
+      {!registered && <RegistrationPopup onComplete={() => setRegistered(true)} />}
+
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
       <motion.div
         initial={{ opacity: 0, y: -30 }}
@@ -69,5 +77,6 @@ export default function Home() {
         <ShieldCheck className="w-4 h-4" /> Admin Panel
       </motion.button>
     </div>
+    </>
   );
 }
