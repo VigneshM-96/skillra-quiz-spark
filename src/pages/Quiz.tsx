@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import QuestionCard from "@/components/QuestionCard";
+import AnswerFeedback from "@/components/AnswerFeedback";
 import { getQuestions } from "@/data/quizData";
 import { playCorrectSound, playWrongSound } from "@/data/sounds";
 
@@ -18,7 +19,8 @@ export default function Quiz() {
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(TIMER_SECONDS);
-  const [answers, setAnswers] = useState<number[]>([]); // track all answers for bootcamp
+  const [answers, setAnswers] = useState<number[]>([]);
+  const [feedbackType, setFeedbackType] = useState<"correct" | "wrong" | "selected" | null>(null);
 
   const title = isBootcamp ? "BootCamp Discovery Quiz" : "AI Medical Coding";
   const total = questions.length;
@@ -31,6 +33,7 @@ export default function Quiz() {
       setCurrent((c) => c + 1);
       setSelected(null);
       setShowResult(false);
+      setFeedbackType(null);
       setTimer(TIMER_SECONDS);
     }
   }, [current, total, score, slug, navigate, answers]);
@@ -56,21 +59,23 @@ export default function Quiz() {
     setSelected(i);
 
     if (isBootcamp) {
-      // Discovery quiz - no right/wrong, just record choice
       setAnswers((prev) => [...prev, i]);
-      playCorrectSound(); // positive feedback for any selection
+      playCorrectSound();
+      setFeedbackType("selected");
     } else {
       const correct = i === q.correctAnswer;
       if (correct) {
         playCorrectSound();
         setScore((s) => s + 1);
+        setFeedbackType("correct");
       } else {
         playWrongSound();
+        setFeedbackType("wrong");
       }
     }
 
     setShowResult(true);
-    setTimeout(goNext, 1200);
+    setTimeout(goNext, 1500);
   };
 
   const progress = ((current) / total) * 100;
@@ -111,6 +116,13 @@ export default function Quiz() {
             showResult={showResult}
             isDiscovery={isBootcamp}
           />
+        )}
+      </AnimatePresence>
+
+      {/* Answer feedback animation */}
+      <AnimatePresence>
+        {showResult && feedbackType && (
+          <AnswerFeedback type={feedbackType} />
         )}
       </AnimatePresence>
     </div>
