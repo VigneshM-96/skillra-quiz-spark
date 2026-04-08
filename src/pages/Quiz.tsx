@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import QuestionCard from "@/components/QuestionCard";
+import AnswerFeedback from "@/components/AnswerFeedback";
 import { getQuestions } from "@/data/quizData";
 import { playCorrectSound, playWrongSound } from "@/data/sounds";
 
