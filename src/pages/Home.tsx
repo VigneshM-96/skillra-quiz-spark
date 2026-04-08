@@ -1,18 +1,18 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Stethoscope, ShieldCheck } from "lucide-react";
+import { Compass, Stethoscope, ShieldCheck } from "lucide-react";
 
 const quizzes = [
   {
-    title: "Summer BootCamp",
-    description: "Test your Indian General Knowledge — history, geography, culture & more.",
-    icon: BookOpen,
+    title: "BootCamp Discovery Quiz",
+    description: "Find out which course suits you best — Tech, Design, Accounting, or Marketing!",
+    icon: Compass,
     path: "/quiz/bootcamp",
     gradient: "from-primary to-secondary",
   },
   {
     title: "AI Medical Coding",
-    description: "Intermediate-level ICD codes, terminology & diagnosis logic.",
+    description: "Test your basic medical & health knowledge — school level questions.",
     icon: Stethoscope,
     path: "/quiz/medical",
     gradient: "from-accent to-primary",
@@ -34,7 +34,7 @@ export default function Home() {
           Skillra Quiz Mania
         </h1>
         <p className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto">
-          Challenge yourself, earn discounts, and level up your knowledge!
+          Discover your perfect course or test your knowledge!
         </p>
       </motion.div>
 

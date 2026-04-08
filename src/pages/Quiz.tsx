@@ -11,50 +11,64 @@ const TIMER_SECONDS = 12;
 export default function Quiz() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const isBootcamp = slug === "bootcamp";
   const [questions] = useState(() => getQuestions(slug || "bootcamp"));
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(TIMER_SECONDS);
+  const [answers, setAnswers] = useState<number[]>([]); // track all answers for bootcamp
 
-  const title = slug === "bootcamp" ? "Summer BootCamp" : "AI Medical Coding";
+  const title = isBootcamp ? "BootCamp Discovery Quiz" : "AI Medical Coding";
   const total = questions.length;
   const q = questions[current];
 
   const goNext = useCallback(() => {
     if (current + 1 >= total) {
-      navigate(`/result`, { state: { score, total, slug } });
+      navigate(`/result`, { state: { score, total, slug, answers } });
     } else {
       setCurrent((c) => c + 1);
       setSelected(null);
       setShowResult(false);
       setTimer(TIMER_SECONDS);
     }
-  }, [current, total, score, slug, navigate]);
+  }, [current, total, score, slug, navigate, answers]);
 
   // Timer
   useEffect(() => {
     if (showResult) return;
     if (timer <= 0) {
+      // For bootcamp, record -1 (no answer); for medical, just skip
+      if (isBootcamp) {
+        setAnswers((prev) => [...prev, -1]);
+      }
       setShowResult(true);
       setTimeout(goNext, 1200);
       return;
     }
     const id = setTimeout(() => setTimer((t) => t - 1), 1000);
     return () => clearTimeout(id);
-  }, [timer, showResult, goNext]);
+  }, [timer, showResult, goNext, isBootcamp]);
 
   const handleSelect = (i: number) => {
     if (showResult) return;
     setSelected(i);
-    const correct = i === q.correctAnswer;
-    if (correct) {
-      playCorrectSound();
-      setScore((s) => s + 1);
+
+    if (isBootcamp) {
+      // Discovery quiz - no right/wrong, just record choice
+      setAnswers((prev) => [...prev, i]);
+      playCorrectSound(); // positive feedback for any selection
     } else {
-      playWrongSound();
+      const correct = i === q.correctAnswer;
+      if (correct) {
+        playCorrectSound();
+        setScore((s) => s + 1);
+      } else {
+        playWrongSound();
+      }
     }
+
     setShowResult(true);
     setTimeout(goNext, 1200);
   };
@@ -95,6 +109,7 @@ export default function Quiz() {
             selectedAnswer={selected}
             onSelect={handleSelect}
             showResult={showResult}
+            isDiscovery={isBootcamp}
           />
         )}
       </AnimatePresence>
