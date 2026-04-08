@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/skillra-quiz-spark/", // 👈 IMPORTANT (repo name)
+  base: "/",
 
   server: {
     host: "::",
