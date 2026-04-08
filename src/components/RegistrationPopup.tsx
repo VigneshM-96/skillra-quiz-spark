@@ -88,16 +88,33 @@ export default function RegistrationPopup({ onComplete }: Props) {
           </p>
 
           <div className="space-y-4">
-            <div>
-              <label className="text-sm text-muted-foreground mb-1 block">Your Name</label>
-              <Input
-                placeholder="Enter your name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                maxLength={50}
-                className="bg-muted/50 border-border"
-              />
-            </div>
+           <div>
+  <label className="text-sm text-muted-foreground mb-1 block">
+    Your Name
+  </label>
+
+  <Input
+    placeholder="Enter your name"
+    value={name}
+    onChange={(e) => {
+      const value = e.target.value;
+
+      // Allow only letters and spaces
+      if (/^[A-Za-z ]*$/.test(value)) {
+        setName(value);
+      }
+    }}
+    maxLength={50}
+    className="bg-muted/50 border-border"
+  />
+
+  {/* Validation Message */}
+  {name.length > 0 && name.length < 3 && (
+    <p className="text-red-500 text-sm mt-1">
+      Name must be at least 3 characters
+    </p>
+  )}
+</div>
 
             <div>
               <label className="text-sm text-muted-foreground mb-1 block">Age</label>
