@@ -59,21 +59,23 @@ export default function Quiz() {
     setSelected(i);
 
     if (isBootcamp) {
-      // Discovery quiz - no right/wrong, just record choice
       setAnswers((prev) => [...prev, i]);
-      playCorrectSound(); // positive feedback for any selection
+      playCorrectSound();
+      setFeedbackType("selected");
     } else {
       const correct = i === q.correctAnswer;
       if (correct) {
         playCorrectSound();
         setScore((s) => s + 1);
+        setFeedbackType("correct");
       } else {
         playWrongSound();
+        setFeedbackType("wrong");
       }
     }
 
     setShowResult(true);
-    setTimeout(goNext, 1200);
+    setTimeout(goNext, 1500);
   };
 
   const progress = ((current) / total) * 100;
