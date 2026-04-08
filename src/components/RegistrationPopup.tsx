@@ -41,19 +41,20 @@ export default function RegistrationPopup({ onComplete }: Props) {
     const now = new Date();
     const date = now.toLocaleDateString("en-IN");
     const time = now.toLocaleTimeString("en-IN");
+    const payload = {
+      date,
+      time,
+      name: name.trim(),
+      age,
+      contact: contact.trim(),
+    };
 
     try {
       await fetch(SHEET_URL, {
         method: "POST",
         mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          date,
-          time,
-          name: name.trim(),
-          age,
-          contact: contact.trim(),
-        }),
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload),
       });
 
       localStorage.setItem("skillra_user", name.trim());
