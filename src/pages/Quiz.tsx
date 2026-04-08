@@ -33,6 +33,7 @@ export default function Quiz() {
       setCurrent((c) => c + 1);
       setSelected(null);
       setShowResult(false);
+      setFeedbackType(null);
       setTimer(TIMER_SECONDS);
     }
   }, [current, total, score, slug, navigate, answers]);
