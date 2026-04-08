@@ -23,9 +23,7 @@ const quizzes = [
 
 export default function Home() {
   const navigate = useNavigate();
-  const [registered, setRegistered] = useState(
-    () => sessionStorage.getItem("skillra_registered") === "true"
-  );
+  const [registered, setRegistered] = useState(false);
 
   return (
     <>

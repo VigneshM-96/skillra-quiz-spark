@@ -56,7 +56,6 @@ export default function RegistrationPopup({ onComplete }: Props) {
         }),
       });
 
-      sessionStorage.setItem("skillra_registered", "true");
       localStorage.setItem("skillra_user", name.trim());
       toast({ title: "Welcome to Skillra Quiz Mania! 🎉" });
       onComplete();
