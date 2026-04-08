@@ -97,19 +97,22 @@ export default function RegistrationPopup({ onComplete }: Props) {
     placeholder="Enter your name"
     value={name}
     onChange={(e) => {
-      const value = e.target.value;
+      let value = e.target.value;
 
-      // Allow only letters and spaces
-      if (/^[A-Za-z ]*$/.test(value)) {
-        setName(value);
-      }
+      // ✅ Remove everything except letters and spaces
+      value = value.replace(/[^A-Za-z ]/g, "");
+
+      // ✅ Prevent multiple spaces
+      value = value.replace(/\s+/g, " ");
+
+      setName(value);
     }}
     maxLength={50}
     className="bg-muted/50 border-border"
   />
 
   {/* Validation Message */}
-  {name.length > 0 && name.length < 3 && (
+  {name.trim().length > 0 && name.trim().length < 3 && (
     <p className="text-red-500 text-sm mt-1">
       Name must be at least 3 characters
     </p>
@@ -145,14 +148,19 @@ export default function RegistrationPopup({ onComplete }: Props) {
             </div>
 
             <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={handleSubmit}
-              disabled={submitting}
-              className="w-full gradient-btn py-3 text-lg font-heading disabled:opacity-50"
-            >
-              {submitting ? "Submitting..." : "Let's Go! 🎯"}
-            </motion.button>
+  whileHover={{ scale: 1.02 }}
+  whileTap={{ scale: 0.98 }}
+  onClick={handleSubmit}
+  disabled={
+    submitting ||
+    !/^[A-Za-z ]{3,50}$/.test(name.trim()) ||
+    !age ||
+    !/^\d{10}$/.test(contact.trim())
+  }
+  className="w-full gradient-btn py-3 text-lg font-heading disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  {submitting ? "Submitting..." : "Let's Go! 🎯"}
+</motion.button>
           </div>
         </motion.div>
       </motion.div>
