@@ -118,6 +118,13 @@ export default function Quiz() {
           />
         )}
       </AnimatePresence>
+
+      {/* Answer feedback animation */}
+      <AnimatePresence>
+        {showResult && feedbackType && (
+          <AnswerFeedback type={feedbackType} />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
