@@ -23,8 +23,14 @@ const quizzes = [
 
 export default function Home() {
   const navigate = useNavigate();
+  const [registered, setRegistered] = useState(
+    () => localStorage.getItem("skillra_registered") === "true"
+  );
 
   return (
+    <>
+      {!registered && <RegistrationPopup onComplete={() => setRegistered(true)} />}
+
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
       <motion.div
         initial={{ opacity: 0, y: -30 }}
