@@ -2,7 +2,7 @@ export interface Question {
   id: string;
   question: string;
   options: string[];
-  correctAnswer: number;
+  correctAnswer: number; // For medical quiz: the correct answer index. For bootcamp: unused (all answers are valid personality choices)
 }
 
 export interface QuizData {
@@ -12,30 +12,32 @@ export interface QuizData {
   questions: Question[];
 }
 
+// Bootcamp Discovery Quiz - answers map to categories:
+// 0 (A) → Tech/AI/Flutter, 1 (B) → Design/Canva, 2 (C) → Tally/Accounting, 3 (D) → Digital Marketing
 export const defaultBootcampQuestions: Question[] = [
-  { id: "bc1", question: "Who was the first President of India?", options: ["Dr. Rajendra Prasad", "Jawaharlal Nehru", "Mahatma Gandhi", "Sardar Patel"], correctAnswer: 0 },
-  { id: "bc2", question: "Which river is known as the 'Sorrow of Bihar'?", options: ["Ganga", "Kosi", "Yamuna", "Brahmaputra"], correctAnswer: 1 },
-  { id: "bc3", question: "What is the capital of Uttarakhand?", options: ["Haridwar", "Nainital", "Dehradun", "Rishikesh"], correctAnswer: 2 },
-  { id: "bc4", question: "Who gave the slogan 'Do or Die'?", options: ["Subhas Chandra Bose", "Bhagat Singh", "Mahatma Gandhi", "Bal Gangadhar Tilak"], correctAnswer: 2 },
-  { id: "bc5", question: "Which is the largest state of India by area?", options: ["Madhya Pradesh", "Maharashtra", "Uttar Pradesh", "Rajasthan"], correctAnswer: 3 },
-  { id: "bc6", question: "The Jallianwala Bagh massacre took place in which year?", options: ["1917", "1919", "1921", "1930"], correctAnswer: 1 },
-  { id: "bc7", question: "Which Indian city is known as the 'Pink City'?", options: ["Jodhpur", "Udaipur", "Jaipur", "Jaisalmer"], correctAnswer: 2 },
-  { id: "bc8", question: "Who wrote the Indian national anthem?", options: ["Bankim Chandra Chatterjee", "Rabindranath Tagore", "Sarojini Naidu", "Muhammad Iqbal"], correctAnswer: 1 },
-  { id: "bc9", question: "Which is the longest river in India?", options: ["Yamuna", "Godavari", "Brahmaputra", "Ganga"], correctAnswer: 3 },
-  { id: "bc10", question: "The Battle of Plassey was fought in which year?", options: ["1757", "1764", "1857", "1947"], correctAnswer: 0 },
+  { id: "bc1", question: "What do you enjoy doing in your free time?", options: ["Exploring apps / tech tools", "Designing posts / editing photos", "Watching business or finance content", "Posting or scrolling social media"], correctAnswer: 0 },
+  { id: "bc2", question: "Which activity sounds most interesting?", options: ["Creating something using AI tools", "Designing posters or logos", "Managing money or budgets", "Running an Instagram page"], correctAnswer: 0 },
+  { id: "bc3", question: "How do you usually solve a problem?", options: ["Use tools or Google solutions", "Think creatively", "Calculate and analyze", "Ask people / communicate"], correctAnswer: 0 },
+  { id: "bc4", question: "What type of career do you prefer?", options: ["Tech-based future career", "Creative field", "Finance/business role", "Marketing/social media"], correctAnswer: 0 },
+  { id: "bc5", question: "What excites you more?", options: ["AI, apps, and technology", "Colors, design, creativity", "Business and money management", "Influencing people online"], correctAnswer: 0 },
+  { id: "bc6", question: "Which skill would you love to learn?", options: ["AI tools / app building", "Graphic design", "Accounting / Tally", "Digital marketing"], correctAnswer: 0 },
+  { id: "bc7", question: "How do you like working?", options: ["Experimenting with tools", "Creative freedom", "Structured and number-based", "Interactive with people"], correctAnswer: 0 },
+  { id: "bc8", question: "What kind of content do you consume most?", options: ["Tech / AI videos", "Design / reels / edits", "Finance / business", "Influencers / social media"], correctAnswer: 0 },
+  { id: "bc9", question: "What is your goal after learning a skill?", options: ["Build something using tech", "Create visually appealing content", "Manage business/accounts", "Grow a page or brand"], correctAnswer: 0 },
+  { id: "bc10", question: "Which role sounds closest to you?", options: ["Tech creator", "Designer", "Accountant", "Marketer"], correctAnswer: 0 },
 ];
 
 export const defaultMedicalQuestions: Question[] = [
-  { id: "mc1", question: "What does ICD stand for?", options: ["International Classification of Diseases", "International Code of Diagnosis", "Internal Classification of Disorders", "International Coding for Diseases"], correctAnswer: 0 },
-  { id: "mc2", question: "Which ICD-10-CM code range covers diseases of the circulatory system?", options: ["A00-B99", "I00-I99", "J00-J99", "K00-K93"], correctAnswer: 1 },
-  { id: "mc3", question: "What is the CPT code category for Evaluation and Management?", options: ["00100-01999", "99201-99499", "70010-79999", "80047-89398"], correctAnswer: 1 },
-  { id: "mc4", question: "In medical coding, what does 'modifier 25' indicate?", options: ["Bilateral procedure", "Significant, separately identifiable E/M service", "Repeat procedure", "Discontinued procedure"], correctAnswer: 1 },
-  { id: "mc5", question: "Which coding system is used for reporting outpatient procedures?", options: ["ICD-10-PCS", "CPT/HCPCS", "DRG", "NDC"], correctAnswer: 1 },
-  { id: "mc6", question: "What does the term 'sequela' mean in ICD-10?", options: ["Initial encounter", "Subsequent encounter", "Late effect of a condition", "Acute condition"], correctAnswer: 2 },
-  { id: "mc7", question: "Which ICD-10 chapter covers neoplasms?", options: ["Chapter 1", "Chapter 2", "Chapter 5", "Chapter 10"], correctAnswer: 1 },
-  { id: "mc8", question: "What is the purpose of a 7th character in ICD-10-CM?", options: ["Specify laterality", "Indicate encounter type", "Specify severity", "Add etiology"], correctAnswer: 1 },
-  { id: "mc9", question: "In medical terminology, 'dyspnea' refers to?", options: ["Chest pain", "Difficulty breathing", "Difficulty swallowing", "Irregular heartbeat"], correctAnswer: 1 },
-  { id: "mc10", question: "What is the correct ICD-10 code prefix for Type 2 Diabetes?", options: ["E10", "E11", "E13", "E08"], correctAnswer: 1 },
+  { id: "mc1", question: "What is the full form of ICD?", options: ["International Classification of Diseases", "Indian Code of Diagnosis", "Internal Classification of Disorders", "International Coding Directory"], correctAnswer: 0 },
+  { id: "mc2", question: "Which organ pumps blood throughout the body?", options: ["Lungs", "Liver", "Heart", "Kidney"], correctAnswer: 2 },
+  { id: "mc3", question: "What does BP stand for in medical terms?", options: ["Body Pain", "Blood Pressure", "Bone Problem", "Brain Pulse"], correctAnswer: 1 },
+  { id: "mc4", question: "Which vitamin is obtained from sunlight?", options: ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"], correctAnswer: 3 },
+  { id: "mc5", question: "What is the normal human body temperature?", options: ["95°F", "98.6°F", "100°F", "102°F"], correctAnswer: 1 },
+  { id: "mc6", question: "Which blood cells fight infections?", options: ["Red Blood Cells", "White Blood Cells", "Platelets", "Plasma"], correctAnswer: 1 },
+  { id: "mc7", question: "What does an ECG measure?", options: ["Brain activity", "Heart activity", "Lung capacity", "Blood sugar"], correctAnswer: 1 },
+  { id: "mc8", question: "Which part of the body is affected by asthma?", options: ["Heart", "Stomach", "Lungs", "Liver"], correctAnswer: 2 },
+  { id: "mc9", question: "What is the largest organ of the human body?", options: ["Liver", "Brain", "Skin", "Heart"], correctAnswer: 2 },
+  { id: "mc10", question: "Which deficiency causes Anaemia?", options: ["Calcium", "Iron", "Vitamin C", "Protein"], correctAnswer: 1 },
 ];
 
 const STORAGE_KEY_BOOTCAMP = "skillra_bootcamp_questions";
@@ -54,4 +56,21 @@ export function getQuestions(slug: string): Question[] {
 export function saveQuestions(slug: string, questions: Question[]) {
   const key = slug === "bootcamp" ? STORAGE_KEY_BOOTCAMP : STORAGE_KEY_MEDICAL;
   localStorage.setItem(key, JSON.stringify(questions));
+}
+
+// Category mapping for bootcamp discovery quiz
+export const CATEGORY_MAP: Record<number, { label: string; course: string; emoji: string }> = {
+  0: { label: "Tech / AI", course: "Flutter Development & AI Tools", emoji: "🚀" },
+  1: { label: "Design", course: "Canva & Graphic Design Mastery", emoji: "🎨" },
+  2: { label: "Accounting", course: "Tally & Accounting Fundamentals", emoji: "📊" },
+  3: { label: "Marketing", course: "Digital Marketing & Social Media", emoji: "📱" },
+};
+
+export function getRecommendedCourse(answers: number[]): { label: string; course: string; emoji: string } {
+  const counts = [0, 0, 0, 0];
+  answers.forEach((a) => {
+    if (a >= 0 && a <= 3) counts[a]++;
+  });
+  const maxIdx = counts.indexOf(Math.max(...counts));
+  return CATEGORY_MAP[maxIdx];
 }

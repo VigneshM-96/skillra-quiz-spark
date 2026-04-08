@@ -6,11 +6,12 @@ interface Props {
   selectedAnswer: number | null;
   onSelect: (index: number) => void;
   showResult: boolean;
+  isDiscovery?: boolean;
 }
 
 const optionLabels = ["A", "B", "C", "D"];
 
-export default function QuestionCard({ question, selectedAnswer, onSelect, showResult }: Props) {
+export default function QuestionCard({ question, selectedAnswer, onSelect, showResult, isDiscovery }: Props) {
   return (
     <motion.div
       key={question.id}
@@ -27,8 +28,13 @@ export default function QuestionCard({ question, selectedAnswer, onSelect, showR
         {question.options.map((option, i) => {
           let classes = "glass-card p-4 cursor-pointer transition-all duration-200 flex items-center gap-3 text-foreground";
           if (showResult) {
-            if (i === question.correctAnswer) classes += " !border-success ring-2 ring-success/40";
-            else if (i === selectedAnswer) classes += " !border-destructive ring-2 ring-destructive/40";
+            if (isDiscovery) {
+              // Discovery: just highlight selected
+              if (i === selectedAnswer) classes += " ring-2 ring-primary/60 !border-primary";
+            } else {
+              if (i === question.correctAnswer) classes += " !border-success ring-2 ring-success/40";
+              else if (i === selectedAnswer) classes += " !border-destructive ring-2 ring-destructive/40";
+            }
           } else if (i === selectedAnswer) {
             classes += " ring-2 ring-primary/60 !border-primary";
           } else {
