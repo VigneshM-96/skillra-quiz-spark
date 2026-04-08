@@ -19,7 +19,8 @@ export default function Quiz() {
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(TIMER_SECONDS);
-  const [answers, setAnswers] = useState<number[]>([]); // track all answers for bootcamp
+  const [answers, setAnswers] = useState<number[]>([]);
+  const [feedbackType, setFeedbackType] = useState<"correct" | "wrong" | "selected" | null>(null);
 
   const title = isBootcamp ? "BootCamp Discovery Quiz" : "AI Medical Coding";
   const total = questions.length;
