@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Compass, Stethoscope, ShieldCheck } from "lucide-react";
+import RegistrationPopup from "@/components/RegistrationPopup";
 
 const quizzes = [
   {
