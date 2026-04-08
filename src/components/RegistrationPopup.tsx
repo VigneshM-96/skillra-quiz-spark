@@ -105,7 +105,7 @@ export default function RegistrationPopup({ onComplete }: Props) {
                 <SelectTrigger className="bg-muted/50 border-border">
                   <SelectValue placeholder="Select your age" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="z-[200] max-h-60">
                   {ages.map((a) => (
                     <SelectItem key={a} value={a}>
                       {a}
