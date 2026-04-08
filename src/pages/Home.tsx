@@ -77,5 +77,6 @@ export default function Home() {
         <ShieldCheck className="w-4 h-4" /> Admin Panel
       </motion.button>
     </div>
+    </>
   );
 }
