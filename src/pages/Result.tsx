@@ -41,7 +41,7 @@ export default function Result() {
     const quizType = isBootcamp ? "Summer Camp" : "AI Medical Coding";
     const result = isBootcamp && recommendation
       ? recommendation.course
-      : `${score}/${total}`;
+      : `${discount}`;
 
     const userName = localStorage.getItem("skillra_user") || "Unknown";
     const userAge = localStorage.getItem("skillra_age") || "";
