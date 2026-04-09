@@ -35,7 +35,7 @@ export default function Result() {
 
   // Send quiz result to Google Sheet
   useEffect(() => {
-    if (hasSent.current) return;
+    if (!state || hasSent.current) return;
     hasSent.current = true;
 
     const quizType = isBootcamp ? "Summer Camp" : "AI Medical Coding";
@@ -57,6 +57,11 @@ export default function Result() {
       }),
     }).catch(() => {});
   }, []);
+
+  if (!state) {
+    navigate("/");
+    return null;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
