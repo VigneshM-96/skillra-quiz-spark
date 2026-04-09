@@ -10,9 +10,6 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 
-const SHEET_URL =
-  "https://script.google.com/macros/s/AKfycbxZ3HqkhgfgSyMGjz0EuVQ58D0rALar66OcuJsVSSaPJ2lDeXYDGo4k0hSnyXf91zJG/exec";
-
 const ages = Array.from({ length: 87 }, (_, i) => String(i + 14)); // 14–100
 
 interface Props {
@@ -38,33 +35,14 @@ export default function RegistrationPopup({ onComplete }: Props) {
 
     setSubmitting(true);
 
-    const now = new Date();
-    const date = now.toLocaleDateString("en-IN");
-    const time = now.toLocaleTimeString("en-IN");
-    const payload = {
-      date,
-      time,
-      name: name.trim(),
-      age,
-      contact: contact.trim(),
-    };
+    // Save registration info locally — will be sent to sheet after quiz completion
+    localStorage.setItem("skillra_user", name.trim());
+    localStorage.setItem("skillra_age", age);
+    localStorage.setItem("skillra_contact", contact.trim());
 
-    try {
-      await fetch(SHEET_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload),
-      });
-
-      localStorage.setItem("skillra_user", name.trim());
-      toast({ title: "Welcome to Skillra Quiz Mania! 🎉" });
-      onComplete();
-    } catch {
-      toast({ title: "Something went wrong. Please try again.", variant: "destructive" });
-    } finally {
-      setSubmitting(false);
-    }
+    toast({ title: "Welcome to Skillra Quiz Mania! 🎉" });
+    setSubmitting(false);
+    onComplete();
   };
 
   return (

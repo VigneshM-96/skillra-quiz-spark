@@ -33,7 +33,7 @@ export default function Result() {
   const pct = Math.round((score / total) * 100);
   const discount = !isBootcamp ? getMedicalDiscount(score) : 0;
 
-  // Send quiz result to Google Sheet (quiz tab, default path)
+  // Send ALL info (registration + quiz result) to Google Sheet in one single POST
   useEffect(() => {
     if (!state || hasSent.current) return;
     hasSent.current = true;
@@ -44,6 +44,8 @@ export default function Result() {
       : `${score}/${total}`;
 
     const userName = localStorage.getItem("skillra_user") || "Unknown";
+    const userAge = localStorage.getItem("skillra_age") || "";
+    const userContact = localStorage.getItem("skillra_contact") || "";
 
     fetch(SHEET_URL, {
       method: "POST",
@@ -51,6 +53,8 @@ export default function Result() {
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify({
         name: userName,
+        age: userAge,
+        contact: userContact,
         quiz_type: quizType,
         result: result,
       }),
