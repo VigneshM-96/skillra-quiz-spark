@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
@@ -18,6 +18,7 @@ export default function Quiz() {
   const [selected, setSelected] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
+  const scoreRef = useRef(0);
   const [timer, setTimer] = useState(TIMER_SECONDS);
   const [answers, setAnswers] = useState<number[]>([]);
   const [feedbackType, setFeedbackType] = useState<"correct" | "wrong" | "selected" | null>(null);
@@ -28,7 +29,7 @@ export default function Quiz() {
 
   const goNext = useCallback(() => {
     if (current + 1 >= total) {
-      navigate(`/result`, { state: { score, total, slug, answers } });
+      navigate(`/result`, { state: { score: scoreRef.current, total, slug, answers } });
     } else {
       setCurrent((c) => c + 1);
       setSelected(null);
@@ -36,13 +37,12 @@ export default function Quiz() {
       setFeedbackType(null);
       setTimer(TIMER_SECONDS);
     }
-  }, [current, total, score, slug, navigate, answers]);
+  }, [current, total, slug, navigate, answers]);
 
   // Timer
   useEffect(() => {
     if (showResult) return;
     if (timer <= 0) {
-      // For bootcamp, record -1 (no answer); for medical, just skip
       if (isBootcamp) {
         setAnswers((prev) => [...prev, -1]);
       }
@@ -67,6 +67,7 @@ export default function Quiz() {
       if (correct) {
         playCorrectSound();
         setScore((s) => s + 1);
+        scoreRef.current += 1;
         setFeedbackType("correct");
       } else {
         playWrongSound();
