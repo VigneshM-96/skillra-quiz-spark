@@ -1,7 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Trophy, RotateCcw, Home, Sparkles } from "lucide-react";
 import { getRecommendedCourse } from "@/data/quizData";
+
+const SHEET_URL =
+  "https://script.google.com/macros/s/AKfycbxZ3HqkhgfgSyMGjz0EuVQ58D0rALar66OcuJsVSSaPJ2lDeXYDGo4k0hSnyXf91zJG/exec";
 
 function getMedicalDiscount(score: number): number {
   if (score <= 0) return 0;
