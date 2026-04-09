@@ -51,8 +51,8 @@ export default function Result() {
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify({
         name: userName,
-        age: quizType,
-        contact: result,
+        quiz_type: quizType,
+        result: result,
       }),
     }).catch(() => {});
   }, []);
