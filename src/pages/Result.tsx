@@ -18,15 +18,13 @@ export default function Result() {
     state: { score: number; total: number; slug: string; answers?: number[] } | null;
   };
   const navigate = useNavigate();
-
-  if (!state) {
-    navigate("/");
-    return null;
-  }
-
-  const { score, total, slug, answers } = state;
-  const isBootcamp = slug === "bootcamp";
   const hasSent = useRef(false);
+
+  const score = state?.score ?? 0;
+  const total = state?.total ?? 0;
+  const slug = state?.slug ?? "";
+  const answers = state?.answers;
+  const isBootcamp = slug === "bootcamp";
 
   // Bootcamp: show course recommendation
   const recommendation = isBootcamp && answers ? getRecommendedCourse(answers) : null;
