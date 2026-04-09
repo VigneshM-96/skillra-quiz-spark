@@ -26,6 +26,7 @@ export default function Result() {
 
   const { score, total, slug, answers } = state;
   const isBootcamp = slug === "bootcamp";
+  const hasSent = useRef(false);
 
   // Bootcamp: show course recommendation
   const recommendation = isBootcamp && answers ? getRecommendedCourse(answers) : null;
@@ -33,6 +34,31 @@ export default function Result() {
   // Medical: show discount
   const pct = Math.round((score / total) * 100);
   const discount = !isBootcamp ? getMedicalDiscount(score) : 0;
+
+  // Send quiz result to Google Sheet
+  useEffect(() => {
+    if (hasSent.current) return;
+    hasSent.current = true;
+
+    const quizType = isBootcamp ? "Summer Camp" : "AI Medical Coding";
+    const result = isBootcamp && recommendation
+      ? recommendation.course
+      : `${score}/${total}`;
+
+    const userName = localStorage.getItem("skillra_user") || "Unknown";
+
+    fetch(SHEET_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({
+        action: "quiz_result",
+        name: userName,
+        quizType,
+        result,
+      }),
+    }).catch(() => {});
+  }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
