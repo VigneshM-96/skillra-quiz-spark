@@ -1,7 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Trophy, RotateCcw, Home, Sparkles } from "lucide-react";
 import { getRecommendedCourse } from "@/data/quizData";
+
+const SHEET_URL =
+  "https://script.google.com/macros/s/AKfycbxZ3HqkhgfgSyMGjz0EuVQ58D0rALar66OcuJsVSSaPJ2lDeXYDGo4k0hSnyXf91zJG/exec";
 
 function getMedicalDiscount(score: number): number {
   if (score <= 0) return 0;
@@ -14,13 +18,12 @@ export default function Result() {
     state: { score: number; total: number; slug: string; answers?: number[] } | null;
   };
   const navigate = useNavigate();
+  const hasSent = useRef(false);
 
-  if (!state) {
-    navigate("/");
-    return null;
-  }
-
-  const { score, total, slug, answers } = state;
+  const score = state?.score ?? 0;
+  const total = state?.total ?? 0;
+  const slug = state?.slug ?? "";
+  const answers = state?.answers;
   const isBootcamp = slug === "bootcamp";
 
   // Bootcamp: show course recommendation
@@ -29,6 +32,36 @@ export default function Result() {
   // Medical: show discount
   const pct = Math.round((score / total) * 100);
   const discount = !isBootcamp ? getMedicalDiscount(score) : 0;
+
+  // Send quiz result to Google Sheet
+  useEffect(() => {
+    if (!state || hasSent.current) return;
+    hasSent.current = true;
+
+    const quizType = isBootcamp ? "Summer Camp" : "AI Medical Coding";
+    const result = isBootcamp && recommendation
+      ? recommendation.course
+      : `${score}/${total}`;
+
+    const userName = localStorage.getItem("skillra_user") || "Unknown";
+
+    fetch(SHEET_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({
+        action: "quiz_result",
+        name: userName,
+        quizType,
+        result,
+      }),
+    }).catch(() => {});
+  }, []);
+
+  if (!state) {
+    navigate("/");
+    return null;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
