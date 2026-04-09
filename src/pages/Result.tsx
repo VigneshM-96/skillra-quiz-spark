@@ -33,7 +33,7 @@ export default function Result() {
   const pct = Math.round((score / total) * 100);
   const discount = !isBootcamp ? getMedicalDiscount(score) : 0;
 
-  // Send quiz result to Google Sheet
+  // Send quiz result to Google Sheet (quiz tab, default path)
   useEffect(() => {
     if (!state || hasSent.current) return;
     hasSent.current = true;
@@ -50,10 +50,9 @@ export default function Result() {
       mode: "no-cors",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify({
-        action: "quiz_result",
         name: userName,
-        quizType,
-        result,
+        age: quizType,
+        contact: result,
       }),
     }).catch(() => {});
   }, []);
