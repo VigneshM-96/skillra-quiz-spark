@@ -14,7 +14,7 @@ const quizzes = [
   },
   {
     title: "AI Medical Coding",
-    description: "Test your basic medical & health knowledge — school level questions.",
+    description: "Assess your medical and healthcare knowledge through graduate-level questions.",
     icon: Stethoscope,
     path: "/quiz/medical",
     gradient: "from-accent to-primary",
