@@ -7,7 +7,7 @@ import AnswerFeedback from "@/components/AnswerFeedback";
 import { getQuestions } from "@/data/quizData";
 import { playCorrectSound, playWrongSound } from "@/data/sounds";
 
-const TIMER_SECONDS = 12;
+const TIMER_SECONDS = 16;
 
 export default function Quiz() {
   const { slug } = useParams<{ slug: string }>();
